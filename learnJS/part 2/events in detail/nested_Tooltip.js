@@ -1,3 +1,9 @@
+/*
+
+Напишите код, который будет показывать всплывающую подсказку над элементом, если у него есть атрибут data-tooltip.
+
+*/
+
 let showingTooltip = null;
 
 document.addEventListener('mouseover', showTooltip);

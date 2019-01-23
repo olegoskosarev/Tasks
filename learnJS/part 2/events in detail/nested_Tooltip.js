@@ -6,8 +6,8 @@
 
 let showingTooltip = null;
 
-document.addEventListener('mouseover', showTooltip);
-document.addEventListener('mouseout', hideTooltip);
+$(document).bind('mouseover', showTooltip);
+$(document).bind('mouseout', hideTooltip);
 
 
 
@@ -16,7 +16,7 @@ function showTooltip(event) {
     let tooltip = null;
 
     while (target !== this) {
-        tooltip = target.getAttribute('data-tooltip'); // text message.
+        tooltip = $(target).attr('data-tooltip'); // text message.
         if (tooltip) break;
         target = target.parentNode;
     }
@@ -31,9 +31,11 @@ function showTooltip(event) {
 function createTooltip(tooltip, target) {
     
     const tooltipElem = document.createElement('div');
-    tooltipElem.className = 'tooltip';
-    tooltipElem.innerHTML = tooltip;
-    document.body.appendChild(tooltipElem);
+
+    $(tooltipElem).addClass('tooltip');
+    $(tooltipElem).html(tooltip);
+    
+    $("body").append(tooltipElem);
 
     const coords = target.getBoundingClientRect();
 
@@ -45,8 +47,9 @@ function createTooltip(tooltip, target) {
         top = coords.top + target.offsetHeight + 5;
     }
 
-    tooltipElem.style.left = left + 'px';
-    tooltipElem.style.top = top + 'px';
+    $(".tooltip").css('left', left + 'px');
+    $(".tooltip").css('top', top + 'px');
+
 
     return tooltipElem;
 }
@@ -55,7 +58,7 @@ function createTooltip(tooltip, target) {
 
 function hideTooltip() {
     if (showingTooltip) {
-        document.body.removeChild(showingTooltip);
+        $(".tooltip").remove();
         showingTooltip = null;
     }
 }

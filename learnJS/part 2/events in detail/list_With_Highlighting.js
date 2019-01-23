@@ -10,16 +10,15 @@
 */
 
 
-const list = document.querySelector('ul');
+const list = $("ul");
 let last = null;
 
-list.onmousedown = function() {
+list.mousedown(function() {
     return false;
-}
+});
 
-list.addEventListener('click', selection);
 
-function selection(event) {
+list.click(function(event) {
     const target = event.target;
     if (target.tagName !== "LI") return;
 
@@ -34,14 +33,12 @@ function selection(event) {
     }
 
     last = target;
-}
-
+});
 
 
 function toggleSelect(target) {
-    target.classList.toggle('selected');
+    $(target).toggleClass('selected');
 }
-
 
 
 function selectFromLast(target) {
@@ -50,26 +47,20 @@ function selectFromLast(target) {
     const isLastClickedBefore = start.compareDocumentPosition(target) & 4;
 
     if (isLastClickedBefore) {
-        for (let item = start; item !== target; item = item.nextElementSibling) {
-            item.classList.add('selected');
-        }
+        $(start).nextUntil(target).addClass('selected');
     } else {
-        for (let item = start; item !== target; item = item.previousElementSibling) {
-            item.classList.add('selected');
-        }
+        $(start).prevUntil(target).addClass('selected');
     }
 
-    target.classList.add('selected');
+    $(target).addClass('selected');
 }
 
 
 function selectSingle(target) {
     deselectAll();
-    target.classList.add('selected');
+    $(target).addClass('selected');
 }
 
 function deselectAll() {
-    for (let i = 0; i < list.children.length; i++) {
-        list.children[i].classList.remove('selected');
-    }
+    list.children().removeClass('selected');
 }

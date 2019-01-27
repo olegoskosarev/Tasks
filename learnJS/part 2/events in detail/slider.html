@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slider</title>
+    <style>
+        #slider {
+            width: 200px;
+            height: 25px;
+            border-radius: 5px;
+            background-color: grey;
+        }
+
+        #thumb {
+            position: relative;
+            width: 10px;
+            height: 40px;
+            top: -7.5px;
+            border-radius: 5px;
+            background-color: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="slider">
+        <div id="thumb"></div>
+    </div>
+
+    <script src="jQuery.js"></script>
+    <script>
+        const slider = document.getElementById("slider");
+        const thumb = document.getElementById("thumb");
+
+        $(thumb).mousedown(function(event) {
+
+            const thumbCoords = getCoords(thumb);
+            const shiftX = event.pageX - thumbCoords.left;
+
+            const sliderCoords = getCoords(slider);
+
+            $(document).on("mousemove", function(event) {
+                let newLeft = event.pageX - shiftX - sliderCoords.left;
+                if (newLeft < 0) {
+                    newLeft = 0;
+                }
+                const newRight = slider.offsetWidth - thumb.offsetWidth;
+                if (newLeft > newRight) {
+                    newLeft = newRight;
+                }
+                $(thumb).css("left", newLeft + "px");
+            });
+
+            $(document).on("mouseup", function() {
+                $(document).off();
+            });
+
+            return false;
+
+        });
+
+        $(thumb).on("dragstart", function() {
+            return false;
+        });
+
+        function getCoords(elem) {
+            const box = elem.getBoundingClientRect();
+
+            return {
+                top: box.top + pageYOffset,
+                left: box.left + pageXOffset
+            };
+        }
+    </script>
+</body>
+</html>

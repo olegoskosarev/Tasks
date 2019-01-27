@@ -33,7 +33,7 @@
         const slider = document.getElementById("slider");
         const thumb = document.getElementById("thumb");
 
-        $(thumb).mousedown(function(event) {
+        $(thumb).on("mousedown", function(event) {
 
             const thumbCoords = getCoords(thumb);
             const shiftX = event.pageX - thumbCoords.left;

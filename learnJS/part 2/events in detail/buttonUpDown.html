@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Button up/down</title>
+    <style>
+        #text {
+            position: relative;
+            height: 200px;
+            width: 420px;
+            padding: 20px 70px;
+            border: solid 1px grey;
+            text-align: justify;
+            overflow: auto;
+        }
+
+        #up, 
+        #down {
+            display: none;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            color: #f00;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="text">
+        <span id="up">Up</span>
+        <span id="down">Down</span>
+        <script>
+            for (let i = 0; i < 2000; i++) document.writeln(i)
+        </script>
+    </div>
+    
+    <script>
+        const text = document.getElementById("text");
+        const up = document.getElementById("up");
+        const down = document.getElementById("down");
+        let scroll = 0;
+
+        text.onscroll = function() { 
+            if (text.scrollTop >= text.clientHeight) {
+                up.style.display = "inline";
+                down.style.display = "none";
+                scroll = text.scrollTop;
+            }
+            if (scroll && text.scrollTop <= text.clientHeight) {
+                up.style.display = "none";
+                down.style.display = "inline";
+            }
+        };
+
+        down.onclick = function() {
+            text.scrollTo(0, scroll);
+            this.style.display = "none";
+        };
+
+        up.onclick = function() {
+            text.scrollTo(0, 0);
+            this.style.display = "none";
+        };
+    </script>
+</body>
+</html>

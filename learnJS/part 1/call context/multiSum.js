@@ -9,7 +9,7 @@ function sum(a) {
 
     sub.toString =  function() {
         return result;
-    }
+    };
 
     return sub;
 }

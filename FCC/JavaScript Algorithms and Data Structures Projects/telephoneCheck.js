@@ -14,30 +14,21 @@
 // 1 (555) 555-5555
 
 function telephoneCheck(str) {
-    if (str.length === 10 && str.match(/\d{10}/)) return true;
+    const regExp1 = /^\d{10}$/;
     // 5555555555
-
-    if (str.length === 12 && str.match(/\d{3}[- ]\d{3}[- ]\d{4}/)) return true;
+    const regExp2 = /^(?:1\s)?\d{3}([-\s]?)\d{3}\1\d{4}$/;
     // 555-555-5555
     // 555 555 5555
-
-    if (str.length === 13 && str.match(/\(\d{3}\)\d{3}-\d{4}/)) return true;
+    // 1 555-555-5555
+    // 1 555 555 5555
+    const regExp3 = /^\(\d{3}\)\s?\d{3}-\d{4}$/;
     // (555)555-5555
-
-    if (str.length === 14) {
-        if (str.match(/\(\d{3}\) \d{3}-\d{4}/) || str.match(/1 \d{3}[- ]\d{3}[- ]\d{4}/) 
-        || str.match(/1\(\d{3}\)\d{3}-\d{4}/)) return true;
-        // (555) 555-5555
-        // 1 555 555 5555
-        // 1 555-555-5555
-        // 1(555)555-5555        
-        return false;   
-    }
-
-    if (str.length === 16 && str.match(/1 \(\d{3}\) \d{3}-\d{4}/)) return true;
+    // (555) 555-5555
+    const regExp4 = /^1(\s)?\(\d{3}\)\1\d{3}-\d{4}$/;
+    // 1(555)555-5555 
     // 1 (555) 555-5555
 
-    return false;
+    return !!(str.match(regExp1) || str.match(regExp2) || str.match(regExp3) || str.match(regExp4));
 }
   
-telephoneCheck("1 555 555 5555");
+console.log(telephoneCheck("1 (555) 555-5555"));
